@@ -1,9 +1,6 @@
 package com.example.interview2023.java08.lambda_example;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -132,7 +129,67 @@ public class LambdaExample {
         });
 
         /*Toán tử :: */
+        /* Là toán tử tham chiếu phương thức trong Java*/
+        MyFuction func01 = MyUtils::add;
+        LambdaExample lambdaExample = new LambdaExample();
+        int result01 = lambdaExample.action(10, 2, func01);
+        System.out.println("Tổng : "+result01);
 
+        MyFuction func02 = MyUtils::minus;
+        LambdaExample lambdaExample1 = new LambdaExample();
+        int result02 = lambdaExample1.action(10,2, func02);
+        System.out.println("Hiệu :"+result02);
 
+        /*StringJoiner*/
+        /*Được xây dựng bởi một dãy ký tự bằng dấu phân cách*/
+        StringJoiner joiner = new StringJoiner("-");
+        joiner.add(" TẾT ");
+        joiner.add(" ĐOÀN ");
+        joiner.add(" VIÊN ");
+        joiner.add(" 2023! ");
+        System.out.println(joiner);
+
+        StringJoiner joiner01 = new StringJoiner("-","<<<",">>>");
+        joiner01.add(" TẾT ");
+        joiner01.add(" ĐOÀN ");
+        joiner01.add(" VIÊN ");
+        joiner01.add(" 2023! ");
+        System.out.println(joiner01);
+
+        StringJoiner joiner02 = new StringJoiner("-","<<<",">>>");
+        joiner02.add(" NGUỜI ");
+        joiner02.add(" LỚN ");
+        StringJoiner joiner03 = new StringJoiner("-","<<<",">>>");
+        joiner03.add(" KHÔNG ");
+        joiner03.add(" THÍCH ");
+        joiner03.add(" TẾT ");
+        System.out.println(joiner02.merge(joiner03));
+        /*Tiền tố hậu tố giống nhau thì mới ra*/
+
+        /*Foreach*/
+        List<String> ls = new ArrayList<String>();
+        ls.add("Java");
+        ls.add("PHP");
+        ls.add("C++");
+        ls.add("Python");
+
+        ls.forEach(System.out::println);
+
+        ls.stream().forEachOrdered(p-> System.out.println(p));
+        /*Stream*/
+        /*Stream(Luồng) là một đối tượng mới của Java . Giúp cho việc thao tác trên Collection và array trở nên dễ dàng và tối ưu hơn.
+        * stream() : Trả về 1 stream xử lý theo tuần tự.
+        * parallelStream() : Trả về 1 stream song song. Xử lý sau đó sẽ thưc hiện song song.
+        * Stream là immutable (Không thay đổi về giá trị)
+        * */
+
+        List<String> filterByLength = ls.stream().filter(item-> item.length() >3).collect(Collectors.toList());
+        System.out.println("List Filter");
+        filterByLength.forEach(System.out::println);
+    }
+
+    public int action(int a, int b, MyFuction func) {
+        return func.accept(a, b);
     }
 }
+
