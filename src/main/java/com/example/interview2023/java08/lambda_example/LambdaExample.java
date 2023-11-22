@@ -1,6 +1,7 @@
 package com.example.interview2023.java08.lambda_example;
 
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -183,9 +184,55 @@ public class LambdaExample {
         * Stream là immutable (Không thay đổi về giá trị)
         * */
 
+        /*Convert Stream to List, Array*/
+        Stream<String> str = Stream.of("Anh","Bình","Cảnh","Duyên");
+        List<String> lStr = str.collect(Collectors.toList());
+        Stream<String> str1 = Stream.of("Anh","Bình","Cảnh","Duyên");
+        String[] aStr = str1.toArray(String[]::new);
+        Stream<String> str2 = Stream.of("Anh","Bình","Cảnh","Duyên");
+        String[] aStr1 = str2.toArray(size -> new String[size]);
+        /* String[]::new == size -> new String[size] */
+        /*Convert List, Array to Stream*/
+        String[] languages = { "Java", "C#", "C++", "PHP", "Javascript" };
+        Stream<String> stringStream = Arrays.stream(languages);
+        List<String> items = new ArrayList<>();
+        items.add("Java");
+        items.add("C#");
+        items.add("C++");
+        items.add("PHP");
+        items.add("Javascript");
+        Stream<String> listStream = items.stream();
+
+        /*filter*/
         List<String> filterByLength = ls.stream().filter(item-> item.length() >3).collect(Collectors.toList());
         System.out.println("List Filter");
         filterByLength.forEach(System.out::println);
+
+        /*skip(), limit()*/
+        Stream<String> strSkipLimit = items.stream().skip(1).limit(2);
+        /*map()*/
+        System.out.println("UPPER ITEM");
+        /*Upper case*/
+        items.stream().map(element -> element.toUpperCase()).forEach(System.out::println);
+        /*Sort*/
+        List<String> data01 = Arrays.asList("Java", "C#", "C++", "PHP", "Javascript");
+
+        System.out.println("SORT");
+        data01.stream() //
+                .sorted() //
+                .forEach(System.out::println);
+
+        System.out.println("SORT BY REQUIRE");
+        data01.stream() //
+                .sorted((s1, s2) -> s1.length() - s2.length()) //
+                .forEach(System.out::println);
+        /*Cách để tạo Stream dùng lại được mà không bị đóng "stream has already been operated upon or closed"*/
+        Supplier<Stream<String>> streamSupplier = ()->Stream.of("A", "B", "C", "D");
+        streamSupplier.get().filter(el->el.equals("A")).forEach(System.out::println);
+        /*anyMatch(), allMatch(), noneMatch() trả về true false*/
+        List<String> data02 = Arrays.asList("Java", "C#", "C++", "PHP", "Javascript");
+        boolean result = data02.stream().anyMatch((s) -> s.equalsIgnoreCase("Java"));
+        System.out.println(result);
     }
 
     public int action(int a, int b, MyFuction func) {
