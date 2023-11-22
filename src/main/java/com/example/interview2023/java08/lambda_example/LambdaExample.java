@@ -229,7 +229,11 @@ public class LambdaExample {
         /*Cách để tạo Stream dùng lại được mà không bị đóng "stream has already been operated upon or closed"*/
         Supplier<Stream<String>> streamSupplier = ()->Stream.of("A", "B", "C", "D");
         streamSupplier.get().filter(el->el.equals("A")).forEach(System.out::println);
-        /*anyMatch(), allMatch(), noneMatch() trả về true false*/
+        /*anyMatch(), allMatch(), noneMatch() trả về true false
+        * anyMatch() 1 thằng match tra về true. 1 item true là break;
+        * allMatch() tất cả phải match
+        * noneMatch() không phần tử nào match
+        * */
         List<String> data02 = Arrays.asList("Java", "C#", "C++", "PHP", "Javascript");
         boolean result = data02.stream().anyMatch((s) -> s.equalsIgnoreCase("Java"));
         System.out.println(result);
